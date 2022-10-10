@@ -18,39 +18,33 @@ public class NovaEmpresaServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         System.out.println("Cadastrando nova empresa");
-        String nomeEmpresa = req.getParameter("nome");
-        String paramDataEmpresa = req.getParameter("data");
-        Date dataAbertura =null;
 
-        //formatando e convertendo a data
-        try{
+        String nomeEmpresa = request.getParameter("nome");
+        String paramDataEmpresa = request.getParameter("data");
+
+        Date dataAbertura = null;
+        //conversion of the date
+        try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            dataAbertura = sdf.parse(paramDataEmpresa);}
-        catch (ParseException e){
-            throw new ServletException(e);//showing the exception  original problem| "catch and rethrow"
-        }
+            dataAbertura = sdf.parse(paramDataEmpresa);
+        } catch (ParseException e) {
+            throw new ServletException(e);
+        } // catching an exception to throw the original parse exception "catching to rethrow"
 
-        //cadastrando no objeto empresa
         Empresa empresa = new Empresa();
         empresa.setNome(nomeEmpresa);
         empresa.setDataAbertura(dataAbertura);
 
-        //adicionando no banco de dados simulado como linked list;
         Banco banco = new Banco();
         banco.adding(empresa);
 
-        PrintWriter out = resp.getWriter();
-//        out.println("<html><body> Empresa " + nomeEmpresa + " cadastrada com sucesso </body></html>");
-
-        //chamar o jsp -- utilizando a requisiçao
-        RequestDispatcher rd = req.getRequestDispatcher("/nova-empresa-criada.jsp");
-        req.setAttribute("empresa",empresa.getNome());//jogar atributo dentro da requisiçao
-        rd.forward(req, resp);//ativando o RequestDispatcher
-
-        System.out.println("Cadastrando nova empresa: " + nomeEmpresa);
-
+        //chamar o JPS
+        RequestDispatcher rd = request.getRequestDispatcher("/nova-empresa-criada.jsp");
+        request.setAttribute("empresa", empresa.getNome());
+        rd.forward(request, response);
     }
+
 }
