@@ -41,10 +41,16 @@ public class NovaEmpresaServlet extends HttpServlet {
         Banco banco = new Banco();
         banco.adding(empresa);
 
-        //chamar o JPS
-        RequestDispatcher rd = request.getRequestDispatcher("/nova-empresa-criada.jsp");
         request.setAttribute("empresa", empresa.getNome());
-        rd.forward(request, response);
+
+        //response - Redirecionamento pelo computador
+
+        response.sendRedirect("listaEmpresas"); // é como se fosse o "requestDispatcher" -> o navegador vai receber a resposta e vai enviar a nova requisição
+
+//        //chamar o JPS
+//        RequestDispatcher rd = request.getRequestDispatcher("/listaEmpresas");
+//        request.setAttribute("empresa", empresa.getNome());
+//        rd.forward(request, response);
     }
 
 }
