@@ -1,6 +1,6 @@
 <%
     //scriplet
-    String nomeEmpresa = (String)request.getAttribute("empresa");
+    String nomeEmpresa = (String) request.getAttribute("empresa");
     System.out.println(nomeEmpresa);
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -16,13 +16,13 @@
 <body>
 
 <c:if test="${not empty empresa}">
-Empresa ${empresa } cadastrada com sucesso!
+    Empresa ${empresa } cadastrada com sucesso!
 </c:if>
 
 <c:if test="${empty empresa}">
     Nenhuma empresa cadastrada!
 </c:if>
- </body>
+</body>
 
 </body>
 </html>
